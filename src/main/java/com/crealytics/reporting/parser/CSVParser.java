@@ -1,6 +1,6 @@
 package com.crealytics.reporting.parser;
 
-import com.crealytics.reporting.domain.Report;
+import com.crealytics.reporting.entity.Report;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import java.io.File;

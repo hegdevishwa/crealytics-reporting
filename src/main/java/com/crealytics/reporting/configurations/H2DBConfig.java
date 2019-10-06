@@ -2,9 +2,10 @@ package com.crealytics.reporting.configurations;
 
 
 import com.crealytics.reporting.dao.ReportRepository;
-import com.crealytics.reporting.domain.Report;
+import com.crealytics.reporting.entity.Report;
 import com.crealytics.reporting.parser.CSVParser;
-import org.springframework.context.annotation.Configuration;
+import com.crealytics.reporting.services.ReportingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +20,10 @@ import java.util.List;
 @Component
 public class H2DBConfig {
 
-    @Resource
+    @Autowired
     ReportRepository reportRepository;
+    @Autowired
+    ReportingService reportingService;
 
     /**
      * Populates H2 DB with the values read form the input file
@@ -28,8 +31,14 @@ public class H2DBConfig {
      */
     @PostConstruct
     public void config() throws IOException {
-        List<Report> reports = CSVParser.parse(new ClassPathResource("2018_01_report.csv").getFile());
-        reports.forEach(report -> report.setMonth(1));
-        reportRepository.saveAll(reports);
+        List<Report> janReports = CSVParser.parse(new ClassPathResource("2018_01_report.csv").getFile());
+        janReports.forEach(report -> report.setMonth("January"));
+        reportingService.generateFullReport(janReports);
+        reportRepository.saveAll(janReports);
+
+        List<Report> febReports = CSVParser.parse(new ClassPathResource("2018_02_report.csv").getFile());
+        febReports.forEach(report -> report.setMonth("February"));
+        reportingService.generateFullReport(febReports);
+        reportRepository.saveAll(febReports);
     }
 }
