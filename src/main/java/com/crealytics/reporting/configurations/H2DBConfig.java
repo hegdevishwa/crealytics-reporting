@@ -10,7 +10,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,6 +26,7 @@ public class H2DBConfig {
 
     /**
      * Populates H2 DB with the values read form the input file
+     *
      * @throws IOException
      */
     @PostConstruct

@@ -1,7 +1,5 @@
 package com.crealytics.reporting.controllers.response;
 
-import com.opencsv.bean.CsvBindByPosition;
-
 public class ReportResponse extends ResponseWrapper {
 
     private String site;

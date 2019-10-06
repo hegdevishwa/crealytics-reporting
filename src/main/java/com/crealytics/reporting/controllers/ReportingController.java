@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
@@ -34,7 +33,7 @@ public class ReportingController {
      */
     @RequestMapping("{month}/{site}")
     @ResponseBody
-    public ResponseEntity<ResponseWrapper> getReportForGivenMonthAndSite(@PathVariable("month") String month, @PathVariable("site") Site site) {
+    public ResponseEntity getReportForGivenMonthAndSite(@PathVariable("month") String month, @PathVariable("site") Site site) {
 
         Report report = reportingService.findReportForMonthAndSite(getMonth(month), site.getValue());
         ResponseEntity response;
@@ -50,15 +49,13 @@ public class ReportingController {
     private ResponseEntity<ResponseWrapper> buildResponse(Report report) {
         ReportResponse reportResponse = new ReportResponse();
         BeanUtils.copyProperties(report, reportResponse);
-        ResponseEntity response = new ResponseEntity(reportResponse, HttpStatus.OK);
-        return response;
+        return new ResponseEntity(reportResponse, HttpStatus.OK);
     }
 
     private ResponseEntity<ResponseWrapper> buildErrorResponse(String message, HttpStatus status) {
         ErrorResponse error = new ErrorResponse();
         error.setErrorMessage(message);
-        ResponseEntity response = new ResponseEntity(error, status);
-        return response;
+        return new ResponseEntity(error, status);
     }
 
     private static String getMonth(String month) {
