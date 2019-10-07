@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,6 @@ public class ReportingService {
     @Autowired
     ReportRepository reportRepository;
 
-
     /**
      * Finds report by given month & site
      *
@@ -27,6 +27,38 @@ public class ReportingService {
      */
     public Report findReportForMonthAndSite(String month, String site) {
         return reportRepository.findByMonthAndSite(month, site);
+    }
+
+    /**
+     * Report aggregated for a given month
+     *
+     * @param month
+     * @return
+     */
+    public Report aggregatedByMonth(String month) {
+        Report report = reportRepository.aggregatedByMonth(month);
+        if (null != report) {
+            List<Report> list = new ArrayList<>();
+            list.add(report);
+            generateFullReport(list);
+        }
+        return report;
+    }
+
+    /**
+     * Report aggregated for a given site
+     *
+     * @param site
+     * @return
+     */
+    public Report aggregatedBySite(String site) {
+        Report report = reportRepository.aggregatedBySite(site);
+        if (null != report) {
+            List<Report> list = new ArrayList<>();
+            list.add(report);
+            generateFullReport(list);
+        }
+        return report;
     }
 
     /**

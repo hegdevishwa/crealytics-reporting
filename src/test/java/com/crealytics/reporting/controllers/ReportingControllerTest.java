@@ -94,7 +94,50 @@ public class ReportingControllerTest {
                 "\"cr\": 0.07\n" +
                 "}";
         JSONAssert.assertEquals(expected, response.getBody(), false);
+    }
 
+    @Test
+    public void test_getReportAggregatedByMonth() throws JSONException {
+        HttpEntity entity = new HttpEntity(null, null);
+        String url = createURL("/api/v1/reports?month=2");
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity,
+                String.class);
+        System.out.println(response.getBody());
+        String expected = "{\n" +
+                "\"requests\": 33969832,\n" +
+                "\"impressions\": 31322712,\n" +
+                "\"clicks\": 97742,\n" +
+                "\"conversions\": 18071,\n" +
+                "\"revenue\": 62940.15,\n" +
+                "\"fill_rate\": 92.21,\n" +
+                "\"eCPM\": 0.2,\n" +
+                "\"month\": \"February\",\n" +
+                "\"ctr\": 0.31,\n" +
+                "\"cr\": 0.06\n" +
+                "}";
+        JSONAssert.assertEquals(expected, response.getBody(), false);
+    }
+
+    @Test
+    public void test_getReportAggregatedBySite() throws JSONException {
+        HttpEntity entity = new HttpEntity(null, null);
+        String url = createURL("/api/v1/reports?site=android");
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity,
+                String.class);
+        System.out.println(response.getBody());
+        String expected = "{\n" +
+                "\"site\": \"android\",\n" +
+                "\"requests\": 18835321,\n" +
+                "\"impressions\": 17755397,\n" +
+                "\"clicks\": 47329,\n" +
+                "\"conversions\": 11365,\n" +
+                "\"revenue\": 35320.53,\n" +
+                "\"fill_rate\": 94.27,\n" +
+                "\"eCPM\": 0.2,\n" +
+                "\"ctr\": 0.27,\n" +
+                "\"cr\": 0.06\n" +
+                "}";
+        JSONAssert.assertEquals(expected, response.getBody(), false);
     }
 
 }

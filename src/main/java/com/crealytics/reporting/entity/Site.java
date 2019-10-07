@@ -1,4 +1,4 @@
-package com.crealytics.reporting.controllers;
+package com.crealytics.reporting.entity;
 
 public enum Site {
     desktop_web("desktop web"),

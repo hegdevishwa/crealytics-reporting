@@ -1,24 +1,15 @@
 package com.crealytics.reporting.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.opencsv.bean.CsvBindByPosition;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 /**
  * Report Entity
  */
-@Entity
 public class Report {
 
-    @Id
-    @GeneratedValue
-    @JsonIgnore
-    private int id;
-
     @CsvBindByPosition(position = 0)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String site;
 
     @CsvBindByPosition(position = 1)
@@ -40,15 +31,9 @@ public class Report {
     private double CR;
     private double fill_rate;
     private double eCPM;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String month;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getSite() {
         return site;
@@ -141,7 +126,6 @@ public class Report {
     @Override
     public String toString() {
         return "Report{" +
-                "id=" + id +
                 ", site='" + site + '\'' +
                 ", requests=" + requests +
                 ", impressions=" + impressions +

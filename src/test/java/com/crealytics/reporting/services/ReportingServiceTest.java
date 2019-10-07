@@ -2,6 +2,7 @@ package com.crealytics.reporting.services;
 
 import com.crealytics.reporting.dao.ReportRepository;
 import com.crealytics.reporting.entity.Report;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
@@ -24,23 +26,40 @@ public class ReportingServiceTest {
     @InjectMocks
     ReportingService reportingService;
 
+    Report report;
 
-    @Test
-    public void test_fndReportForMonthAndSite() {
-
-        when(reportRepository.findByMonthAndSite(any(), any())).thenReturn(new Report());
-        assertNotNull(reportingService.findReportForMonthAndSite(any(), any()));
-    }
-
-    @Test
-    public void test_generateFullReport() {
-        Report report = new Report();
+    @Before
+    public void setUp() {
+        report = new Report();
         report.setSite("abc");
         report.setRequests(9905942);
         report.setImpressions(9401153);
         report.setClicks(25291);
         report.setConversions(6216);
         report.setRevenue(19053.61);
+    }
+
+    @Test
+    public void test_fndReportForMonthAndSite() {
+        when(reportRepository.findByMonthAndSite(any(), any())).thenReturn(new Report());
+        assertNotNull(reportingService.findReportForMonthAndSite(any(), any()));
+    }
+
+    @Test
+    public void test_aggregatedByMonth() {
+        when(reportRepository.aggregatedByMonth(anyString())).thenReturn(report);
+        assertNotNull(reportingService.aggregatedByMonth(anyString()));
+    }
+
+    @Test
+    public void test_aggregatedBySite() {
+        when(reportRepository.aggregatedBySite(anyString())).thenReturn(report);
+        assertNotNull(reportingService.aggregatedBySite(anyString()));
+    }
+
+    @Test
+    public void test_generateFullReport() {
+
 
         List<Report> list = new ArrayList<Report>();
         list.add(report);
