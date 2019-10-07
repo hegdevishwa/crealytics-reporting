@@ -3,9 +3,7 @@ package com.crealytics.reporting.parser;
 import com.crealytics.reporting.entity.Report;
 import com.opencsv.bean.CsvToBeanBuilder;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -19,9 +17,9 @@ public class CSVParser {
      * @return List of reports
      * @throws IOException
      */
-    public static List<Report> parse(File file) throws IOException {
+    public static List<Report> parse(InputStream file) throws IOException {
 
-        return (List<Report>) new CsvToBeanBuilder(new FileReader(file))
+        return (List<Report>) new CsvToBeanBuilder(new InputStreamReader(file))
                 .withType(Report.class).withSeparator(',').withSkipLines(1).build().parse();
 
     }

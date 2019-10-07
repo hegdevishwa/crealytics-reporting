@@ -31,12 +31,12 @@ public class H2DBConfig {
      */
     @PostConstruct
     public void config() throws IOException {
-        List<Report> janReports = CSVParser.parse(new ClassPathResource("2018_01_report.csv").getFile());
+        List<Report> janReports = CSVParser.parse(new ClassPathResource("2018_01_report.csv").getInputStream());
         janReports.forEach(report -> report.setMonth("January"));
         reportingService.generateFullReport(janReports);
         reportRepository.saveAll(janReports);
 
-        List<Report> febReports = CSVParser.parse(new ClassPathResource("2018_02_report.csv").getFile());
+        List<Report> febReports = CSVParser.parse(new ClassPathResource("2018_02_report.csv").getInputStream());
         febReports.forEach(report -> report.setMonth("February"));
         reportingService.generateFullReport(febReports);
         reportRepository.saveAll(febReports);
